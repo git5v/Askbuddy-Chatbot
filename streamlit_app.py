@@ -2,7 +2,7 @@ import streamlit as st
 from langchain_bot import interact_with_bot, initialize_model, create_promt  
 
 st.set_page_config(
-    page_title="Askbuddy",
+    page_title="Askbuddy AI Bot",
     page_icon="🤖", # You can also use ":robot_face:"
 )
 
