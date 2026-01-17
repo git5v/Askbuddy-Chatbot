@@ -26,10 +26,11 @@ if query:
         st.session_state.messages.append({"role": "user", "content": query})
         st.chat_message('User').markdown(query)
         context = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state.messages])
-        output = interact_with_bot(prompt, llm, context)
-        st.spinner("Thinking...")
-        st.chat_message('AI').markdown(output)
-        st.session_state.messages.append({"role": "AI", "content": output})
+        with st.spinner("Thinking..."):
+            output = interact_with_bot(prompt, llm, context)
+            st.spinner("Thinking...")
+            st.chat_message('AI').markdown(output)
+            st.session_state.messages.append({"role": "AI", "content": output})
 
     except Exception as e:
         st.error(f"An error occusrred: {e}")  

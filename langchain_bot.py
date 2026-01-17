@@ -7,15 +7,55 @@ from langchain_core.prompts import ChatPromptTemplate
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
+# def initialize_model():
+#     # Initialize Gemini model
+#     llm = ChatGoogleGenerativeAI(
+#         model="gemini-2.5-flash",  # Fast & free gemini-3-flash-preview gemini-2.5-flash gemini-2.0-flash-lite
+# #  gemini-2.5-flash-lite
+#         # model="gemini-3-flash-preview",
+#         google_api_key=api_key,
+#         temperature=0.7
+#     )
+#     return llm
+
 def initialize_model():
-    # Initialize Gemini model
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-2.0-flash-lite",  # Fast & free gemini-3-flash-preview gemini-2.5-flash gemini-2.5-flash-lite
-        # model="gemini-3-flash-preview",
+    # Define your primary model (the one you prefer to use)
+    primary_llm = ChatGoogleGenerativeAI(
+        model="gemini-2.5-flash",
         google_api_key=api_key,
         temperature=0.7
     )
-    return llm
+
+    # Define your fallback models
+    fallback_1 = ChatGoogleGenerativeAI(
+        model="gemini-2.0-flash-lite",
+        google_api_key=api_key,
+        temperature=0.7
+    )
+    
+    fallback_2 = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash", # Older stable version as a safety net
+        google_api_key=api_key,
+        temperature=0.7
+    )
+
+    fallback_3 = ChatGoogleGenerativeAI(
+        model="gemini-3-flash-preview", # Older stable version as a safety net
+        google_api_key=api_key,
+        temperature=0.7
+    )
+
+    fallback_4 = ChatGoogleGenerativeAI(
+        model="gemini-2.5-flash-lite", # Older stable version as a safety net
+        google_api_key=api_key,
+        temperature=0.7
+    )
+
+    # Combine them using fallbacks
+    # If primary fails due to rate limits (429), it immediately tries the next in the list
+    llm_with_fallback = primary_llm.with_fallbacks([fallback_1, fallback_2, fallback_3, fallback_4])
+    
+    return llm_with_fallback
 
 def create_promt():
     # Create prompt template
@@ -40,9 +80,12 @@ def interact_with_bot(prompt: str, llm, user_input: str):
             print('**Generating repsonse for your provided input**')
         response = chain.invoke({"input": user_input})
         print("Gemini:", response.text)
+        model_used = response.response_metadata.get("model_name")
+        print(model_used)
         return response.text
     except Exception as e:
-        print(f"Error occured as {e} ")
+        error = f"Error occured as {e} "
+        return error
 
 def create_chain_interactive_loop(prompt: str, llm, user_input: str):
     # Create chain
