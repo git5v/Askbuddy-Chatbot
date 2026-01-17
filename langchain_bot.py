@@ -10,7 +10,7 @@ api_key = os.getenv("GEMINI_API_KEY")
 def initialize_model():
     # Initialize Gemini model
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash-lite",  # Fast & free gemini-3-flash-preview gemini-2.5-flash gemini-2.0-flash-lite
+        model="gemini-2.0-flash-lite",  # Fast & free gemini-3-flash-preview gemini-2.5-flash gemini-2.5-flash-lite
         # model="gemini-3-flash-preview",
         google_api_key=api_key,
         temperature=0.7
@@ -42,7 +42,7 @@ def interact_with_bot(prompt: str, llm, user_input: str):
         print("Gemini:", response.text)
         return response.text
     except Exception as e:
-        print(f"Error occured as" {e})
+        print(f"Error occured as {e} ")
 
 def create_chain_interactive_loop(prompt: str, llm, user_input: str):
     # Create chain
