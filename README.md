@@ -3,3 +3,5 @@ AskBuddy is a chatbot designed for personal assistance, built using LangChain fo
 
 # Webapp link 
 https://askbuddy.streamlit.app/
+
+https://aistudio.google.com/ can be used for getting the API key 
