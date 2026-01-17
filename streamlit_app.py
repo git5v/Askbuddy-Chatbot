@@ -7,7 +7,7 @@ st.set_page_config(
 )
 
 st.title("Askbuddy 🤖 your personal AI Chatbot")
-st.markdown("Question and answer board 🖥️ with Langchain and Gemini")
+st.markdown("Question and answer dashboard 🖥️ created with Langchain and Gemini")
 
 llm = initialize_model()
 prompt = create_promt()
