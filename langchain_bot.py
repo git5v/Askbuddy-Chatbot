@@ -30,16 +30,19 @@ def create_promt():
 
 def interact_with_bot(prompt: str, llm, user_input: str):
     
-    chain = prompt | llm
-    print("Gemini + LangChain Chat (type 'quit' to exit):")
-    # user_input = input("You: ")
-    if user_input.lower() in ['quit', 'bye', 'exit']:
-        print("---------Thanks you for your repsone---------")
-    else :
-        print('**Generating repsonse for your provided input**')
-    response = chain.invoke({"input": user_input})
-    print("Gemini:", response.text)
-    return response.text
+    try:
+        chain = prompt | llm
+        print("Gemini + LangChain Chat (type 'quit' to exit):")
+        # user_input = input("You: ")
+        if user_input.lower() in ['quit', 'bye', 'exit']:
+            print("---------Thanks you for your repsone---------")
+        else :
+            print('**Generating repsonse for your provided input**')
+        response = chain.invoke({"input": user_input})
+        print("Gemini:", response.text)
+        return response.text
+    except Exception as e:
+        print(f"Error occured as" {e})
 
 def create_chain_interactive_loop(prompt: str, llm, user_input: str):
     # Create chain
