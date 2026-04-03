@@ -13,6 +13,6 @@ client = genai.Client(api_key=api_key)
 
 response = client.models.generate_content(
     model="gemini-3-flash-preview",  # Updated model name (gemini-3-flash-preview may not exist)
-    contents="Who is elon musk"
+    contents="Who is Elon Musk"
 )
 print(response.text)
